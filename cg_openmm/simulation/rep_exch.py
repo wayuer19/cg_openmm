@@ -515,7 +515,7 @@ def process_replica_exchange_data(
     subsample_indices = {}
     
     # If sufficiently large, discard the first 20000 frames as equilibration period and use 
-    # subsampleCorrelatedData to get the energy decorrelation time.
+    # subsample_correlated_data to get the energy decorrelation time.
     if total_steps >= 40000 or frame_begin > 0:
         if frame_begin > 0:
             # If specified, use frame_begin as the start of the production region
@@ -525,7 +525,7 @@ def process_replica_exchange_data(
             production_start=20000
             
         for state in range(n_replicas):
-            subsample_indices[state] = timeseries.subsampleCorrelatedData(
+            subsample_indices[state] = timeseries.subsample_correlated_data(
                 state_energies[state][production_start:],
                 conservative=True,
             )
