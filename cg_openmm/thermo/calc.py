@@ -435,16 +435,16 @@ def get_heat_capacity(frame_begin=0, sample_spacing=1, frame_end=-1, output_data
         unsampled_state_energies[k, :] /= beta_full_k[k]
 
     # we don't actually need these expectations, but this code can be used to validate
-    #results = mbarT.computeExpectations(unsampled_state_energies, state_dependent=True)
+    #results = mbarT.compute_expectations(unsampled_state_energies, state_dependent=True)
     #E_expect = results[0]
     #dE_expect = results[1]
     
     # expectations for the differences between states, which we need for numerical derivatives                                               
-    results = mbarT.computeExpectations(unsampled_state_energies, output="differences", state_dependent=True)
-    DeltaE_expect = results[0]
-    dDeltaE_expect = results[1]
+    results = mbarT.compute_expectations(unsampled_state_energies, output="differences", state_dependent=True)
+    DeltaE_expect = results['mu']
+    dDeltaE_expect = results['sigma']
     
-    N_eff = mbarT.computeEffectiveSampleNumber()
+    N_eff = mbarT.compute_effective_sample_number()
 
     # Now calculate heat capacity (with uncertainties) using the finite difference approach. 
     Cv = np.zeros(n_T_vals)
@@ -920,20 +920,20 @@ def get_heat_capacity_reeval(
         unsampled_state_energies[k+n_unsampled_states,:] /= beta_full_k[k]        
 
     # we don't actually need these expectations, but this code can be used to validate
-    #results = mbarT.computeExpectations(unsampled_state_energies, state_dependent=True)
+    #results = mbarT.compute_expectations(unsampled_state_energies, state_dependent=True)
     #E_expect = results[0]
     #dE_expect = results[1]
     
     # expectations for the differences between states, which we need for numerical derivatives                                               
-    results = mbarT.computeExpectations(
+    results = mbarT.compute_expectations(
         unsampled_state_energies,
         output="differences",
         state_dependent=True
     )
-    DeltaE_expect = results[0]
-    dDeltaE_expect = results[1]
+    DeltaE_expect = results['mu']
+    dDeltaE_expect = results['sigma']
 
-    N_eff = mbarT.computeEffectiveSampleNumber()
+    N_eff = mbarT.compute_effective_sample_number()
     
     # Now calculate heat capacity (with uncertainties) using the finite difference approach. 
     
