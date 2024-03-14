@@ -776,14 +776,14 @@ def run_replica_exchange(
     thermodynamic_states = list()
 
     # Define thermodynamic states.
-    # box_vectors = system.getDefaultPeriodicBoxVectors()
+    box_vectors = system.getDefaultPeriodicBoxVectors()
     for temperature in temperature_list:
         thermodynamic_state = openmmtools.states.ThermodynamicState(
             system=system, temperature=temperature
         )
         thermodynamic_states.append(thermodynamic_state)
         sampler_states.append(
-            openmmtools.states.SamplerState(positions)
+            openmmtools.states.SamplerState(positions, box_vectors=box_vectors)
         )  # no box vectors, non-periodic system.
 
     # Create and configure simulation object.
